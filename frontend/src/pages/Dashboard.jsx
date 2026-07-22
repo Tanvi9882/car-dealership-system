@@ -28,8 +28,8 @@ export default function Dashboard({ user }) {
   // Notification Toast
   const [notification, setNotification] = useState(null);
 
-  const brands = ['All', 'Mahindra', 'Kia', 'Skoda'];
-  const categories = ['All', 'Compact SUV', 'SUV', 'Off-road SUV', 'Electric SUV', 'Luxury', 'Electric', 'Sedan', 'Sports'];
+  const brands = ['All', 'Mahindra', 'Maruti Suzuki', 'Renault', 'Kia', 'Skoda'];
+  const categories = ['All', 'Hatchback', 'Compact SUV', 'SUV', 'Off-road SUV', 'Electric SUV', 'Luxury', 'Electric', 'Sedan', 'Sports'];
 
   const fetchVehicles = async () => {
     if (isAiSearchActive) return;

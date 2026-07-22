@@ -63,6 +63,22 @@ This document records the exact user prompt history, design instructions, and te
 
 ---
 
+## 📌 Prompt 5: Hatchbacks Fleet Integration (Maruti Suzuki & Renault)
+
+### 👤 User Prompt:
+> 1. Maruti Suzuki Alto K10 | ₹4.23 lakh | Petrol / CNG | Up to 33.85 km/kg (CNG) | 5 Seats
+> 2. Renault Kwid | ₹4.70 lakh | Petrol | Up to 22 km/l | 5 Seats
+> 3. Maruti Suzuki S-Presso | ₹4.73 lakh | Petrol / CNG | Up to 32.73 km/kg (CNG) | 5 Seats
+> 4. Maruti Suzuki Celerio | ₹5.64 lakh | Petrol / CNG | Up to 34.43 km/kg (CNG) | 5 Seats
+> *(Attached 4 car image assets)*
+
+### 🤖 AI Actions & Response:
+- Extracted and saved all 4 hatchback car photos into `frontend/public/images/maruti/` and `frontend/public/images/renault/`.
+- Seeded Alto K10, Kwid, S-Presso, and Celerio into `car_dealership.db` SQLite database (Total 23 vehicles).
+- Updated frontend brand pills (`Maruti Suzuki`, `Renault`) and category filters (`Hatchback`).
+
+---
+
 ## 📌 Summary of AI Tooling Collaboration
 - **AI Tool Used**: Gemini AI / Antigravity Agentic Assistant.
 - **Impact**: Accelerated TDD test suite creation, automated SQLite seed migrations, styled dark-mode React UI, and enforced 100% specification compliance.
