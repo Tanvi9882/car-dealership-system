@@ -79,6 +79,21 @@ This document records the exact user prompt history, design instructions, and te
 
 ---
 
+## 📌 Prompt 6: Electric Vehicle Fleet Integration (MG & Tata Motors)
+
+### 👤 User Prompt:
+> 1. MG Comet EV | Electric Hatchback | Electric | 4 Seats | ₹7.36 lakh
+> 2. Tata Tiago EV | Electric Hatchback | Electric | 5 Seats | ₹7.99 lakh
+> 3. Tata Punch EV | Electric SUV | Electric | 5 Seats | ₹9.99 lakh
+> *(Attached 3 EV car image assets)*
+
+### 🤖 AI Actions & Response:
+- Extracted and saved MG and Tata EV photo assets into `frontend/public/images/mg/` and `frontend/public/images/tata/`.
+- Seeded Comet EV, Tiago EV, and Punch EV into `car_dealership.db` SQLite database (Total 26 vehicles).
+- Updated frontend brand pills (`MG`, `Tata`) and category filters (`Electric Hatchback`, `Electric SUV`).
+
+---
+
 ## 📌 Summary of AI Tooling Collaboration
 - **AI Tool Used**: Gemini AI / Antigravity Agentic Assistant.
 - **Impact**: Accelerated TDD test suite creation, automated SQLite seed migrations, styled dark-mode React UI, and enforced 100% specification compliance.
