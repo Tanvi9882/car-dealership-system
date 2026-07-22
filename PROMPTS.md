@@ -111,6 +111,19 @@ This document records the exact user prompt history, design instructions, and te
 
 ---
 
+## 📌 Prompt 8: Supercar Integration (Nissan GT-R R35)
+
+### 👤 User Prompt:
+> Nissan GT-R (R35) | Nissan | 3.8L Twin-Turbo V6 | 570 PS | 4 Seats | ₹2.12 crore
+> *(Attached high-res Nissan GT-R photo)*
+
+### 🤖 AI Actions & Response:
+- Extracted and saved Nissan GT-R photo into `frontend/public/images/nissan/gtr_r35.jpg`.
+- Seeded Nissan GT-R (R35) into `car_dealership.db` (Total 32 vehicles).
+- Updated frontend brand pills (`Nissan`) and category filters (`Sports`).
+
+---
+
 ## 📌 Summary of AI Tooling Collaboration
 - **AI Tool Used**: Gemini AI / Antigravity Agentic Assistant.
 - **Impact**: Accelerated TDD test suite creation, automated SQLite seed migrations, styled dark-mode React UI, and enforced 100% specification compliance.
