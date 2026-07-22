@@ -94,6 +94,23 @@ This document records the exact user prompt history, design instructions, and te
 
 ---
 
+## 📌 Prompt 7: Performance Sports & Luxury Fleet (Porsche, BMW, Mercedes-AMG, Toyota, Audi)
+
+### 👤 User Prompt:
+> 1. Porsche 911 Carrera | Porsche | 3.0L Twin-Turbo Flat-6 | 394 PS | 2+2 | ₹2.11 crore
+> 2. BMW M4 Competition | BMW | 3.0L Twin-Turbo Petrol | 530 PS | 4 | ₹1.56 crore
+> 3. Mercedes-AMG GT 63 | Mercedes-Benz | 4.0L Twin-Turbo V8 | 585 PS | 2+2 | ₹3.00 crore
+> 4. Toyota GR Supra | Toyota | 3.0L Turbo Petrol | 387 PS | 2 | ₹90 lakh (expected)
+> 5. Audi RS5 Coupe | Audi | 2.9L Twin-Turbo V6 | 450 PS | 4 | ₹1.13 crore
+> *(Attached 5 high-res performance car images)*
+
+### 🤖 AI Actions & Response:
+- Extracted and saved all 5 sports car photos into `frontend/public/images/porsche/`, `bmw/`, `mercedes/`, `toyota/`, and `audi/`.
+- Seeded 911 Carrera, M4 Competition, AMG GT 63, GR Supra, and RS5 Coupe into `car_dealership.db` (Total 31 vehicles).
+- Updated frontend brand pills (`Porsche`, `BMW`, `Mercedes-Benz`, `Toyota`, `Audi`) and category filters (`Sports`, `Luxury`).
+
+---
+
 ## 📌 Summary of AI Tooling Collaboration
 - **AI Tool Used**: Gemini AI / Antigravity Agentic Assistant.
 - **Impact**: Accelerated TDD test suite creation, automated SQLite seed migrations, styled dark-mode React UI, and enforced 100% specification compliance.
