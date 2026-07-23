@@ -110,12 +110,26 @@ export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInven
         </div>
       )}
 
-      {/* Hero Header */}
-      <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 shadow-2xl">
-        <div className="absolute right-0 top-0 w-96 h-96 bg-indigo-500/10 rounded-full filter blur-3xl -z-0"></div>
+      {/* Hero Header with Subtle Animations */}
+      <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden hero-gradient-animate bg-gradient-to-r from-[#070B17] via-[#111827] to-[#1E1B4B]/80 border border-slate-800 shadow-2xl">
+        
+        {/* 1. Soft Glow Ambient Light */}
+        <div className="absolute -right-16 -top-16 w-96 h-96 bg-purple-600/15 rounded-full filter blur-3xl animate-soft-glow pointer-events-none" />
+        <div className="absolute left-1/3 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full filter blur-3xl animate-soft-glow pointer-events-none" style={{ animationDelay: '3s' }} />
+
+        {/* 2. Animated Light Ray Sweep */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="w-40 h-full bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 animate-light-sweep" />
+        </div>
+
+        {/* 3. Floating Light Particles */}
+        <div className="absolute top-8 right-24 w-3 h-3 rounded-full bg-amber-400/40 blur-xs animate-float-slow pointer-events-none" />
+        <div className="absolute bottom-12 right-1/3 w-2 h-2 rounded-full bg-purple-400/50 blur-xs animate-float-delayed pointer-events-none" />
+        <div className="absolute top-1/2 right-12 w-2.5 h-2.5 rounded-full bg-emerald-400/40 blur-xs animate-float-slow pointer-events-none" style={{ animationDelay: '1.5s' }} />
+
         <div className="relative z-10 max-w-2xl">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4">
-            <Sparkles className="w-3.5 h-3.5" />
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
             AI-Enhanced Fleet Collection
           </span>
           <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mb-4">

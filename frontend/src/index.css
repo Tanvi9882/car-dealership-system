@@ -29,6 +29,50 @@ body {
   }
 }
 
+/* Subtle Hero Keyframe Animations */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+  50% { transform: translateY(-16px) rotate(180deg); opacity: 0.7; }
+}
+
+@keyframes soft-glow-pulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.18); }
+}
+
+@keyframes light-sweep {
+  0% { transform: translateX(-100%) rotate(25deg); opacity: 0; }
+  20% { opacity: 0.4; }
+  50%, 100% { transform: translateX(300%) rotate(25deg); opacity: 0; }
+}
+
+.hero-gradient-animate {
+  background-size: 200% 200%;
+  animation: gradient-shift 14s ease infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-slow 10s ease-in-out 3s infinite;
+}
+
+.animate-soft-glow {
+  animation: soft-glow-pulse 6s ease-in-out infinite;
+}
+
+.animate-light-sweep {
+  animation: light-sweep 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
