@@ -44,14 +44,14 @@ export default function VehicleCard({ vehicle, onAddToCart, isUserLoggedIn, onVi
   return (
     <div 
       onClick={() => onViewDetails && onViewDetails(vehicle)}
-      className="group glass-card rounded-2xl overflow-hidden hover:border-amber-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col h-full cursor-pointer"
+      className="group glass-card rounded-2xl overflow-hidden hover:border-amber-500/50 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-amber-500/15 flex flex-col h-full cursor-pointer"
     >
       {/* Image Container */}
       <div className="relative h-52 overflow-hidden bg-slate-900">
         <img
           src={vehicle.image_url || defaultImage}
           alt={`${vehicle.make} ${vehicle.model}`}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
           onError={(e) => { e.target.src = defaultImage; }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>

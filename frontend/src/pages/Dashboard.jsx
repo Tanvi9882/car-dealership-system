@@ -20,6 +20,7 @@ export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInven
   // AI Smart Search state
   const [isAiSearchActive, setIsAiSearchActive] = useState(false);
   const [activeFilterSummary, setActiveFilterSummary] = useState('');
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
 
   // Details Modal state
   const [selectedVehicleForModal, setSelectedVehicleForModal] = useState(null);
@@ -111,11 +112,14 @@ export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInven
       )}
 
       {/* Hero Header with Subtle Animations */}
-      <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden hero-gradient-animate bg-gradient-to-r from-[#070B17] via-[#111827] to-[#1E1B4B]/80 border border-slate-800 shadow-2xl">
+      <div className="relative rounded-3xl py-16 sm:py-24 px-8 sm:px-12 overflow-hidden hero-gradient-animate bg-gradient-to-r from-[#070B17] via-[#111827] to-[#1E1B4B]/80 border border-slate-800 shadow-2xl">
         
         {/* 1. Soft Glow Ambient Light */}
         <div className="absolute -right-16 -top-16 w-96 h-96 bg-purple-600/15 rounded-full filter blur-3xl animate-soft-glow pointer-events-none" />
         <div className="absolute left-1/3 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full filter blur-3xl animate-soft-glow pointer-events-none" style={{ animationDelay: '3s' }} />
+
+        {/* Radial Background Glow behind text */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[260px] bg-gradient-to-tr from-amber-500/20 via-purple-600/20 to-indigo-500/10 blur-3xl rounded-full pointer-events-none animate-pulse z-0 duration-[5000ms]" />
 
         {/* 2. Animated Light Ray Sweep */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -127,38 +131,23 @@ export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInven
         <div className="absolute bottom-12 right-1/3 w-2 h-2 rounded-full bg-purple-400/50 blur-xs animate-float-delayed pointer-events-none" />
         <div className="absolute top-1/2 right-12 w-2.5 h-2.5 rounded-full bg-emerald-400/40 blur-xs animate-float-slow pointer-events-none" style={{ animationDelay: '1.5s' }} />
 
-        <div className="relative z-10 max-w-2xl">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            AI-Enhanced Fleet Collection
-          </span>
-          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mb-4">
-            Find Your Perfect <span className="gradient-text">Drive</span>
-            <span className="block text-2xl sm:text-3xl font-extrabold text-amber-400 mt-2 tracking-normal">
-              Powered by AI.
-            </span>
+        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-4">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight whitespace-nowrap">
+            Discover Your Dream <span className="gradient-text">Car</span>
           </h1>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Browse our handpicked inventory of luxury SUVs, sports cars, and electric vehicles with AI Smart Search & Price Insights.
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl mx-auto">
+            Explore premium SUVs, luxury sedans, sports cars, and EVs with advanced search, detailed specifications, transparent pricing, and seamless online booking.
           </p>
         </div>
       </div>
 
-      {/* AI Smart Search Bar */}
-      <SmartSearchBar
-        onSmartSearch={handleSmartSearch}
-        onReset={handleResetAiSearch}
-        activeFilterSummary={activeFilterSummary}
-        loading={loading}
-      />
-
-      {/* Standard Search & Filter Controls */}
-      {!isAiSearchActive && (
-        <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            
-            {/* Make / Model Search */}
-            <div className="relative w-full md:w-80">
+      {/* Search & Filter Controls with AI Search Button */}
+      <div id="showroom-fleet" className="glass-card rounded-2xl p-6 border border-slate-800 space-y-4 shadow-xl">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          
+          {/* Make / Model Search & Ask AI Button */}
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <div className="relative flex-1 md:w-72">
               <Search className="w-5 h-5 text-slate-500 absolute left-3.5 top-3" />
               <input
                 type="text"
@@ -169,32 +158,43 @@ export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInven
               />
             </div>
 
-            {/* Price Range Filter */}
-            <div className="flex items-center gap-2 w-full md:w-auto">
-              <div className="relative flex-1 md:w-36">
-                <IndianRupee className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                <input
-                  type="number"
-                  placeholder="Min Price (₹)"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl pl-8 pr-3 py-2.5 text-xs text-white focus:outline-none"
-                />
-              </div>
-              <span className="text-slate-600 font-bold">-</span>
-              <div className="relative flex-1 md:w-36">
-                <IndianRupee className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                <input
-                  type="number"
-                  placeholder="Max Price (₹)"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 focus:border-indigo-500 rounded-xl pl-8 pr-3 py-2.5 text-xs text-white focus:outline-none"
-                />
-              </div>
-            </div>
-
+            {/* ✨ Interactive Ask AI Search Modal Trigger */}
+            <SmartSearchBar
+              onSmartSearch={handleSmartSearch}
+              onReset={handleResetAiSearch}
+              activeFilterSummary={activeFilterSummary}
+              loading={loading}
+              isOpen={isAiModalOpen}
+              onOpenChange={setIsAiModalOpen}
+            />
           </div>
+
+          {/* Price Range Filter */}
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <div className="relative flex-1 md:w-36">
+              <IndianRupee className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+              <input
+                type="number"
+                placeholder="Min Price (₹)"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 focus:border-purple-500 rounded-xl pl-8 pr-3 py-2.5 text-xs text-white focus:outline-none"
+              />
+            </div>
+            <span className="text-slate-600 font-bold">-</span>
+            <div className="relative flex-1 md:w-36">
+              <IndianRupee className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+              <input
+                type="number"
+                placeholder="Max Price (₹)"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 focus:border-purple-500 rounded-xl pl-8 pr-3 py-2.5 text-xs text-white focus:outline-none"
+              />
+            </div>
+          </div>
+
+        </div>
 
           {/* Category Filter Pills */}
           <div className="flex items-center gap-2 overflow-x-auto pt-1 pb-1 scrollbar-none border-t border-slate-800/60">
@@ -217,7 +217,6 @@ export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInven
             ))}
           </div>
         </div>
-      )}
 
       {/* Showroom Vehicle Cards Grid */}
       {loading ? (
