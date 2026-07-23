@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, TrendingDown, Info, ShoppingBag, AlertTriangle, Layers, ArrowRight, ShieldCheck, Fuel, Cog, Users } from 'lucide-react';
+import { X, Sparkles, TrendingDown, Info, ShoppingBag, AlertTriangle, Layers, ArrowRight, ShieldCheck, Fuel, Cog, Users, Palette } from 'lucide-react';
 import { vehicleAPI } from '../services/api';
+import { getColorsForModel, COLOR_HEX_MAP } from '../utils/carColors';
 
 export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onAddToCart, isUserLoggedIn, onSelectVehicle, inBagCount = 0 }) {
   const [recommendations, setRecommendations] = useState([]);
   const [loadingRecs, setLoadingRecs] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('');
 
   const defaultImage = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80";
 
   useEffect(() => {
     if (isOpen && vehicle) {
       fetchRecommendations();
+      const colors = getColorsForModel(vehicle.model);
+      setSelectedColor(colors[0] || 'Diamond White');
     }
   }, [isOpen, vehicle]);
 
@@ -30,10 +34,11 @@ export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onAddToC
 
   const isOutOfStock = vehicle.quantity <= 0;
   const isMaxInBag = inBagCount >= vehicle.quantity;
+  const modelColors = getColorsForModel(vehicle.model);
 
   const handlePurchase = () => {
     if (onAddToCart) {
-      onAddToCart(vehicle);
+      onAddToCart({ ...vehicle, selectedColor });
       onClose();
     }
   };
@@ -97,6 +102,40 @@ export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onAddToC
                   <Users className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-[10px] uppercase font-bold text-slate-500">Seating</p>
                   <p className="text-xs font-bold text-white mt-0.5">{vehicle.seating_capacity} Seater</p>
+                </div>
+              </div>
+
+              {/* Official Exterior Color Selector */}
+              <div className="bg-slate-950/90 border border-slate-800 p-3.5 rounded-xl space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <Palette className="w-3.5 h-3.5 text-amber-400" /> Official Exterior Colors
+                  </span>
+                  <span className="text-xs font-bold text-amber-400">{selectedColor}</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {modelColors.map((color) => {
+                    const hex = COLOR_HEX_MAP[color.toLowerCase()] || '#94A3B8';
+                    const isSelected = selectedColor === color;
+                    return (
+                      <button
+                        key={color}
+                        type="button"
+                        onClick={() => setSelectedColor(color)}
+                        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-medium transition-all ${
+                          isSelected
+                            ? 'bg-amber-500/15 border-amber-500 text-amber-300 font-bold shadow-sm'
+                            : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <span
+                          className="w-2.5 h-2.5 rounded-full border border-slate-600 shrink-0"
+                          style={{ backgroundColor: hex }}
+                        />
+                        <span>{color}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
