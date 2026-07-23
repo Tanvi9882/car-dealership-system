@@ -90,7 +90,52 @@ export const OFFICIAL_MODEL_COLORS = {
 
   // 26. BMW M4 Competition
   "m4 competition": ["Sao Paulo Yellow", "Alpine White", "Black Sapphire", "Toronto Red", "Isle of Man Green"],
-  "m4": ["Sao Paulo Yellow", "Alpine White", "Black Sapphire", "Toronto Red", "Isle of Man Green"]
+  "m4": ["Sao Paulo Yellow", "Alpine White", "Black Sapphire", "Toronto Red", "Isle of Man Green"],
+
+  // 27. Volvo EX30
+  "ex30": ["Cloud Blue", "Crystal White", "Onyx Black", "Moss Yellow", "Vapour Grey"],
+
+  // 28. Tesla Model S Plaid
+  "model s plaid": ["Pearl White Multi-Coat", "Solid Black", "Midnight Silver", "Deep Blue Metallic", "Ultra Red"],
+  "model s": ["Pearl White Multi-Coat", "Solid Black", "Midnight Silver", "Deep Blue Metallic", "Ultra Red"],
+
+  // 29. Lexus LM 350h
+  "lm 350h": ["Sonic Quartz", "Graphite Black", "Sonic Titanium", "Deep Blue"],
+  "lm": ["Sonic Quartz", "Graphite Black", "Sonic Titanium", "Deep Blue"],
+
+  // 30. Corvette C8 Stingray
+  "corvette c8 stingray": ["Accelerate Yellow", "Torch Red", "Arctic White", "Black", "Rapid Blue"],
+  "corvette": ["Accelerate Yellow", "Torch Red", "Arctic White", "Black", "Rapid Blue"],
+
+  // 31. Nissan GT-R
+  "gt-r": ["Pearl White", "Ultimate Silver", "Vibrant Red", "Gun Metallic", "Super Black"],
+  "gtr": ["Pearl White", "Ultimate Silver", "Vibrant Red", "Gun Metallic", "Super Black"],
+
+  // 32. Aston Martin DB12 Super Tourer
+  "db12 super tourer": ["Magnetic Silver", "Onyx Black", "Lunar White", "Racing Green", "Hyper Red"],
+  "db12": ["Magnetic Silver", "Onyx Black", "Lunar White", "Racing Green", "Hyper Red"],
+
+  // 33. Lamborghini Urus Performante
+  "urus performante": ["Verde Mantis", "Nero Noctis", "Arancio Borealis", "Bianco Monocerus", "Blu Cepheus"],
+  "urus": ["Verde Mantis", "Nero Noctis", "Arancio Borealis", "Bianco Monocerus", "Blu Cepheus"],
+
+  // 34. Lamborghini Huracán Tecnica
+  "huracán tecnica": ["Verde Selvans", "Arancio Xanto", "Bianco Monocerus", "Nero Noctis", "Blu Aegir"],
+  "huracan": ["Verde Selvans", "Arancio Xanto", "Bianco Monocerus", "Nero Noctis", "Blu Aegir"],
+
+  // 35. Ferrari 296 GTB Hybrid
+  "296 gtb hybrid": ["Rosso Corsa", "Giallo Modena", "Nero Daytona", "Blu Corsa", "Bianco Avus"],
+  "296 gtb": ["Rosso Corsa", "Giallo Modena", "Nero Daytona", "Blu Corsa", "Bianco Avus"],
+
+  // 36. Bentley Flying Spur V8
+  "flying spur v8": ["Glacier White", "Onyx Black", "Hallmark Silver", "Kingfisher Blue", "Verdant Green"],
+  "flying spur": ["Glacier White", "Onyx Black", "Hallmark Silver", "Kingfisher Blue", "Verdant Green"],
+
+  // 37. Bentley Bentayga
+  "bentayga": ["Glacier White", "Onyx Black", "St. James Red", "Dark Sapphire", "British Racing Green"],
+
+  // 38. Rolls-Royce Phantom / Series II
+  "phantom": ["Arctic White", "Black Diamond", "Midnight Sapphire", "Salamanca Blue", "Bespoke Commission"]
 };
 
 // Color Swatch Hex Mappings for UI display
@@ -115,6 +160,17 @@ export const COLOR_HEX_MAP = {
   "dsat silver": "#94A3B8",
   "sparkling silver": "#CBD5E1",
   "ceramic silver": "#E2E8F0",
+  "crystal white": "#FFFFFF",
+  "pearl white multi-coat": "#F8FAFC",
+  "sonic quartz": "#F1F5F9",
+  "ultimate silver": "#CBD5E1",
+  "magnetic silver": "#94A3B8",
+  "lunar white": "#F8FAFC",
+  "bianco monocerus": "#FFFFFF",
+  "bianco avus": "#F8FAFC",
+  "glacier white": "#FFFFFF",
+  "hallmark silver": "#CBD5E1",
+  "sonic titanium": "#94A3B8",
 
   // Blacks
   "stealth black": "#09090B",
@@ -130,6 +186,14 @@ export const COLOR_HEX_MAP = {
   "black magic": "#000000",
   "black sapphire": "#09090B",
   "carbon black": "#0F172A",
+  "onyx black": "#09090B",
+  "solid black": "#000000",
+  "graphite black": "#18181B",
+  "black": "#000000",
+  "super black": "#09090B",
+  "nero noctis": "#000000",
+  "nero daytona": "#09090B",
+  "black diamond": "#0F172A",
 
   // Reds & Pinks
   "tango red": "#DC2626",
@@ -143,6 +207,12 @@ export const COLOR_HEX_MAP = {
   "tornado red": "#DC2626",
   "corrida red": "#EF4444",
   "toronto red": "#DC2626",
+  "ultra red": "#B91C1C",
+  "torch red": "#DC2626",
+  "vibrant red": "#EF4444",
+  "hyper red": "#B91C1C",
+  "rosso corsa": "#DC2626",
+  "st. james red": "#991B1B",
 
   // Blues
   "nebula blue": "#2563EB",
@@ -158,13 +228,34 @@ export const COLOR_HEX_MAP = {
   "race blue": "#1D4ED8",
   "tanzanite blue": "#1E1B4B",
   "phytonic blue": "#1E40AF",
+  "cloud blue": "#0EA5E9",
+  "deep blue metallic": "#1E3A8A",
+  "deep blue": "#1D4ED8",
+  "rapid blue": "#0284C7",
+  "blu cepheus": "#38BDF8",
+  "blu aegir": "#0284C7",
+  "blu corsa": "#1D4ED8",
+  "kingfisher blue": "#0EA5E9",
+  "dark sapphire": "#1E1B4B",
+  "midnight sapphire": "#0F172A",
+  "salamanca blue": "#1E40AF",
 
-  // Yellows & Greens
+  // Yellows & Greens & Oranges
   "nitro yellow": "#FACC15",
   "curcuma yellow": "#EAB308",
   "sao paulo yellow": "#FACC15",
+  "moss yellow": "#CA8A04",
+  "accelerate yellow": "#EAB308",
+  "giallo modena": "#FACC15",
   "deep forest": "#14532D",
   "isle of man green": "#15803D",
+  "racing green": "#065F46",
+  "verde mantis": "#22C55E",
+  "verde selvans": "#16A34A",
+  "verdant green": "#065F46",
+  "british racing green": "#14532D",
+  "arancio borealis": "#F97316",
+  "arancio xanto": "#EA580C",
 
   // Greys, Browns & Golds
   "lakeside brown": "#78350F",
@@ -189,7 +280,11 @@ export const COLOR_HEX_MAP = {
   "brooklyn grey": "#94A3B8",
   "oxide grey": "#CBD5E1",
   "mineral grey": "#64748B",
-  "frozen pure grey": "#94A3B8"
+  "frozen pure grey": "#94A3B8",
+  "vapour grey": "#94A3B8",
+  "midnight silver": "#475569",
+  "gun metallic": "#475569",
+  "bespoke commission": "#D97706"
 };
 
 export function getColorsForModel(modelName) {
