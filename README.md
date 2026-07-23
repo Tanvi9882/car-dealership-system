@@ -15,6 +15,18 @@ It provides complete JWT-authenticated role-based access control (Users & Admins
 
 ---
 
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Backend** | ✅ Python with FastAPI |
+| **Frontend** | ✅ HTML5, CSS3, Tailwind CSS, React (JavaScript) |
+| **Database** | ✅ SQLite |
+| **Authentication** | ✅ JWT (JSON Web Tokens) |
+| **Testing** | ✅ Pytest — TDD (14/14 tests passing) |
+
+---
+
 ## 🖼️ Application Features & Screenshots
 
 ### 1. Showroom Dashboard & Brand Filtering
