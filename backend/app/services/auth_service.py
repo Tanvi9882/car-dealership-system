@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import BaseModel, EmailStr, ConfigDict, field_validator
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from app.models import User
@@ -10,9 +10,26 @@ class UserRegisterSchema(BaseModel):
     password: str
     role: str = "user"
 
+    @field_validator("password")
+    @classmethod
+    def validate_password_length(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        return v
+
+    @field_validator("email")
+    @classmethod
+    def normalize_email(cls, v: str) -> str:
+        return v.lower().strip()
+
 class UserLoginSchema(BaseModel):
     email: EmailStr
     password: str
+
+    @field_validator("email")
+    @classmethod
+    def normalize_email(cls, v: str) -> str:
+        return v.lower().strip()
 
 class UserResponseSchema(BaseModel):
     id: int
@@ -28,7 +45,8 @@ class TokenResponseSchema(BaseModel):
     user: UserResponseSchema
 
 def register_user(user_data: UserRegisterSchema, db: Session) -> UserResponseSchema:
-    existing_user = db.query(User).filter(User.email == user_data.email).first()
+    normalized_email = user_data.email.lower().strip()
+    existing_user = db.query(User).filter(User.email == normalized_email).first()
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -37,8 +55,8 @@ def register_user(user_data: UserRegisterSchema, db: Session) -> UserResponseSch
     
     hashed_pwd = hash_password(user_data.password)
     new_user = User(
-        name=user_data.name,
-        email=user_data.email,
+        name=user_data.name.strip(),
+        email=normalized_email,
         password=hashed_pwd,
         role=user_data.role if user_data.role in ["admin", "user"] else "user"
     )
@@ -48,7 +66,8 @@ def register_user(user_data: UserRegisterSchema, db: Session) -> UserResponseSch
     return UserResponseSchema.model_validate(new_user)
 
 def login_user(credentials: UserLoginSchema, db: Session) -> TokenResponseSchema:
-    user = db.query(User).filter(User.email == credentials.email).first()
+    normalized_email = credentials.email.lower().strip()
+    user = db.query(User).filter(User.email == normalized_email).first()
     if not user or not verify_password(credentials.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -59,3 +59,30 @@ def test_login_invalid_credentials(client):
     }
     response = client.post("/api/auth/login", json=login_payload)
     assert response.status_code == 401
+
+def test_password_too_short_fails(client):
+    payload = {
+        "name": "Short Pass",
+        "email": "shortpass@example.com",
+        "password": "short"
+    }
+    response = client.post("/api/auth/register", json=payload)
+    assert response.status_code == 422
+
+def test_get_current_user_profile(client):
+    reg_payload = {
+        "name": "David Miller",
+        "email": "david@example.com",
+        "password": "davidpassword123"
+    }
+    client.post("/api/auth/register", json=reg_payload)
+    
+    login_res = client.post("/api/auth/login", json={"email": "david@example.com", "password": "davidpassword123"})
+    token = login_res.json()["access_token"]
+    
+    headers = {"Authorization": f"Bearer {token}"}
+    me_res = client.get("/api/auth/me", headers=headers)
+    assert me_res.status_code == 200
+    me_data = me_res.json()
+    assert me_data["email"] == "david@example.com"
+    assert me_data["name"] == "David Miller"

@@ -5,7 +5,7 @@ import SmartSearchBar from '../components/SmartSearchBar';
 import VehicleDetailsModal from '../components/VehicleDetailsModal';
 import { vehicleAPI } from '../services/api';
 
-export default function Dashboard({ user }) {
+export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInventory }) {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -28,8 +28,7 @@ export default function Dashboard({ user }) {
   // Notification Toast
   const [notification, setNotification] = useState(null);
 
-  const brands = ['All', 'Nissan', 'Porsche', 'BMW', 'Mercedes-Benz', 'Toyota', 'Audi', 'Mahindra', 'Tata', 'MG', 'Maruti Suzuki', 'Renault', 'Kia', 'Skoda'];
-  const categories = ['All', 'Sports', 'Luxury', 'Electric Hatchback', 'Electric SUV', 'Hatchback', 'Compact SUV', 'SUV', 'Off-road SUV', 'Electric', 'Sedan'];
+  const categories = ['All', 'SUV', 'Sedan', 'Sports', 'Luxury', 'Electric'];
 
   const fetchVehicles = async () => {
     if (isAiSearchActive) return;
@@ -59,7 +58,7 @@ export default function Dashboard({ user }) {
 
   useEffect(() => {
     fetchVehicles();
-  }, [searchMakeModel, selectedMake, selectedCategory, minPrice, maxPrice]);
+  }, [searchMakeModel, selectedMake, selectedCategory, minPrice, maxPrice, onRefreshInventory]);
 
   const handleSmartSearch = async (queryText) => {
     setLoading(true);
@@ -80,35 +79,6 @@ export default function Dashboard({ user }) {
     setIsAiSearchActive(false);
     setActiveFilterSummary('');
     fetchVehicles();
-  };
-
-  const handlePurchase = async (vehicleId) => {
-    try {
-      const response = await vehicleAPI.purchase(vehicleId);
-      const updatedVehicle = response.data;
-
-      setVehicles((prev) =>
-        prev.map((v) => (v.id === vehicleId ? updatedVehicle : v))
-      );
-
-      if (selectedVehicleForModal && selectedVehicleForModal.id === vehicleId) {
-        setSelectedVehicleForModal(updatedVehicle);
-      }
-
-      setNotification({
-        type: 'success',
-        message: `Congratulations! Successfully purchased ${updatedVehicle.make} ${updatedVehicle.model}.`
-      });
-
-      setTimeout(() => setNotification(null), 5000);
-    } catch (err) {
-      const errorMsg = err.response?.data?.detail || 'Purchase failed.';
-      setNotification({
-        type: 'error',
-        message: errorMsg
-      });
-      setTimeout(() => setNotification(null), 5000);
-    }
   };
 
   const handleViewDetails = (vehicle) => {
@@ -133,7 +103,7 @@ export default function Dashboard({ user }) {
           )}
           <div>
             <p className="text-xs font-bold uppercase tracking-wider">
-              {notification.type === 'success' ? 'Transaction Confirmed' : 'Purchase Error'}
+              {notification.type === 'success' ? 'Notification' : 'Error'}
             </p>
             <p className="text-sm font-medium mt-0.5">{notification.message}</p>
           </div>
@@ -144,7 +114,7 @@ export default function Dashboard({ user }) {
       <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 shadow-2xl">
         <div className="absolute right-0 top-0 w-96 h-96 bg-indigo-500/10 rounded-full filter blur-3xl -z-0"></div>
         <div className="relative z-10 max-w-2xl">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-bold tracking-widest uppercase mb-4">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             AI-Enhanced Fleet Collection
           </span>
@@ -209,29 +179,8 @@ export default function Dashboard({ user }) {
 
           </div>
 
-          {/* Brand Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pt-1 pb-1 scrollbar-none border-t border-slate-800/60">
-            <span className="text-xs font-semibold text-indigo-400 uppercase tracking-wider flex items-center gap-1 shrink-0 mr-2">
-              <Car className="w-3.5 h-3.5" />
-              Brand:
-            </span>
-            {brands.map((b) => (
-              <button
-                key={b}
-                onClick={() => setSelectedMake(b)}
-                className={`px-4 py-1.5 rounded-xl text-xs font-bold shrink-0 transition-all duration-200 ${
-                  selectedMake === b
-                    ? 'bg-gradient-to-r from-red-600 to-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                    : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
-                }`}
-              >
-                {b}
-              </button>
-            ))}
-          </div>
-
           {/* Category Filter Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pt-1 pb-1 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pt-1 pb-1 scrollbar-none border-t border-slate-800/60">
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1 shrink-0 mr-2">
               <Filter className="w-3.5 h-3.5" />
               Category:
@@ -242,7 +191,7 @@ export default function Dashboard({ user }) {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all duration-200 ${
                   selectedCategory === cat
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                    ? 'bg-amber-500 text-slate-950 font-bold shadow-md shadow-amber-500/20'
                     : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
                 }`}
               >
@@ -256,7 +205,7 @@ export default function Dashboard({ user }) {
       {/* Showroom Vehicle Cards Grid */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
-          <div className="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-sm font-medium text-slate-400">Processing live fleet database...</p>
         </div>
       ) : error ? (
@@ -279,27 +228,36 @@ export default function Dashboard({ user }) {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vehicles.map((v) => (
-            <VehicleCard
-              key={v.id}
-              vehicle={v}
-              onPurchase={handlePurchase}
-              isUserLoggedIn={!!user}
-              onViewDetails={handleViewDetails}
-            />
-          ))}
+          {vehicles.map((v) => {
+            const inBagItem = cart.find((item) => item.vehicle.id === v.id);
+            const inBagCount = inBagItem ? inBagItem.quantity : 0;
+
+            return (
+              <VehicleCard
+                key={v.id}
+                vehicle={v}
+                inBagCount={inBagCount}
+                onAddToCart={onAddToCart}
+                isUserLoggedIn={!!user}
+                onViewDetails={handleViewDetails}
+              />
+            );
+          })}
         </div>
       )}
 
       {/* Vehicle Details & Recommendations Modal */}
-      <VehicleDetailsModal
-        isOpen={isDetailsModalOpen}
-        onClose={() => setIsDetailsModalOpen(false)}
-        vehicle={selectedVehicleForModal}
-        onPurchase={handlePurchase}
-        isUserLoggedIn={!!user}
-        onSelectVehicle={(vehicle) => setSelectedVehicleForModal(vehicle)}
-      />
+      {selectedVehicleForModal && (
+        <VehicleDetailsModal
+          isOpen={isDetailsModalOpen}
+          onClose={() => setIsDetailsModalOpen(false)}
+          vehicle={selectedVehicleForModal}
+          inBagCount={cart.find((item) => item.vehicle.id === selectedVehicleForModal?.id)?.quantity || 0}
+          onAddToCart={onAddToCart}
+          isUserLoggedIn={!!user}
+          onSelectVehicle={(vehicle) => setSelectedVehicleForModal(vehicle)}
+        />
+      )}
 
     </div>
   );

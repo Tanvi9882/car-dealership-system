@@ -151,13 +151,11 @@ export default function EditVehicleModal({ isOpen, onClose, vehicle, onUpdate, o
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none"
               >
-                <option value="Sports">Sports</option>
-                <option value="Luxury">Luxury</option>
-                <option value="Electric">Electric</option>
                 <option value="SUV">SUV</option>
                 <option value="Sedan">Sedan</option>
-                <option value="Hatchback">Hatchback</option>
-                <option value="Truck">Truck</option>
+                <option value="Luxury">Luxury</option>
+                <option value="Electric">Electric</option>
+                <option value="Sports">Sports</option>
               </select>
             </div>
             <div>

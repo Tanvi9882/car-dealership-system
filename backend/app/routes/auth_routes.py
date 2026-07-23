@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import get_db
+from app.auth import get_current_user
+from app.models import User
 from app.services.auth_service import (
     UserRegisterSchema,
     UserLoginSchema,
@@ -19,3 +21,7 @@ def register(user_data: UserRegisterSchema, db: Session = Depends(get_db)):
 @router.post("/login", response_model=TokenResponseSchema)
 def login(credentials: UserLoginSchema, db: Session = Depends(get_db)):
     return login_user(credentials, db)
+
+@router.get("/me", response_model=UserResponseSchema)
+def get_me(current_user: User = Depends(get_current_user)):
+    return UserResponseSchema.model_validate(current_user)

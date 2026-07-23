@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
 import { ShoppingBag, AlertTriangle, Layers, Sparkles, TrendingDown, Info, Eye, Fuel, Cog, Users } from 'lucide-react';
 
-export default function VehicleCard({ vehicle, onPurchase, isUserLoggedIn, onViewDetails }) {
-  const [purchasing, setPurchasing] = useState(false);
-
+export default function VehicleCard({ vehicle, onAddToCart, isUserLoggedIn, onViewDetails, inBagCount = 0 }) {
   const defaultImage = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80";
 
-  const handlePurchaseClick = async (e) => {
+  const handleAddToCartClick = (e) => {
     e.stopPropagation();
-    if (!isUserLoggedIn) {
-      alert("Please login to purchase vehicles!");
-      return;
-    }
-    setPurchasing(true);
-    try {
-      await onPurchase(vehicle.id);
-    } finally {
-      setPurchasing(false);
+    if (onAddToCart) {
+      onAddToCart(vehicle);
     }
   };
 
   const isOutOfStock = vehicle.quantity <= 0;
+  const isMaxInBag = inBagCount >= vehicle.quantity;
 
   // Price Insight Badge Styling
   const getPriceInsightBadge = () => {
@@ -52,7 +44,7 @@ export default function VehicleCard({ vehicle, onPurchase, isUserLoggedIn, onVie
   return (
     <div 
       onClick={() => onViewDetails && onViewDetails(vehicle)}
-      className="group glass-card rounded-2xl overflow-hidden hover:border-indigo-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col h-full cursor-pointer"
+      className="group glass-card rounded-2xl overflow-hidden hover:border-amber-500/40 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10 flex flex-col h-full cursor-pointer"
     >
       {/* Image Container */}
       <div className="relative h-52 overflow-hidden bg-slate-900">
@@ -79,10 +71,10 @@ export default function VehicleCard({ vehicle, onPurchase, isUserLoggedIn, onVie
         </span>
 
         {/* Hover overlay hint */}
-        <div className="absolute inset-0 bg-indigo-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
           <span className="px-4 py-2 bg-slate-900/90 text-white text-xs font-bold rounded-xl border border-slate-700 flex items-center gap-2 shadow-lg">
-            <Eye className="w-4 h-4 text-indigo-400" />
-            View Details & Recommendations
+            <Eye className="w-4 h-4 text-amber-400" />
+            View Vehicle Specifications
           </span>
         </div>
       </div>
@@ -91,21 +83,21 @@ export default function VehicleCard({ vehicle, onPurchase, isUserLoggedIn, onVie
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
           <div className="flex items-center justify-between gap-2 mb-1">
-            <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400 uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-semibold text-amber-400 uppercase tracking-widest">
               <Layers className="w-3.5 h-3.5" />
               {vehicle.make}
             </div>
             {getPriceInsightBadge()}
           </div>
 
-          <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-indigo-300 transition-colors">
+          <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-amber-300 transition-colors">
             {vehicle.model}
           </h3>
 
           {/* Specs Bar (Fuel, Transmission, Seating) */}
           <div className="flex items-center gap-2 flex-wrap mb-3 text-[11px] font-semibold text-slate-400">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-800 text-indigo-300">
-              <Fuel className="w-3 h-3 text-indigo-400" />
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-800 text-amber-300">
+              <Fuel className="w-3 h-3 text-amber-400" />
               {vehicle.fuel_type || 'Petrol'}
             </span>
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
@@ -136,17 +128,17 @@ export default function VehicleCard({ vehicle, onPurchase, isUserLoggedIn, onVie
           </div>
         </div>
 
-        {/* Purchase Action Button */}
+        {/* Add to Shopping Bag / Purchase Now Button */}
         <button
-          onClick={handlePurchaseClick}
-          disabled={isOutOfStock || purchasing}
-          id={`purchase-btn-${vehicle.id}`}
-          className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-200 shadow-md ${
+          onClick={handleAddToCartClick}
+          disabled={isOutOfStock || isMaxInBag}
+          id={`add-bag-btn-${vehicle.id}`}
+          className={`w-full py-3.5 px-4 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-200 shadow-md ${
             isOutOfStock
               ? 'bg-slate-800/60 text-slate-500 border border-slate-700/50 cursor-not-allowed'
-              : purchasing
-              ? 'bg-indigo-700 text-white cursor-wait opacity-80'
-              : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/20 active:scale-95'
+              : isMaxInBag
+              ? 'bg-slate-800 text-amber-400/70 border border-amber-500/30 cursor-not-allowed'
+              : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/20 active:scale-95'
           }`}
         >
           {isOutOfStock ? (
@@ -154,15 +146,15 @@ export default function VehicleCard({ vehicle, onPurchase, isUserLoggedIn, onVie
               <AlertTriangle className="w-4 h-4 text-slate-500" />
               Out of Stock
             </>
-          ) : purchasing ? (
+          ) : isMaxInBag ? (
             <>
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              Processing...
+              <ShoppingBag className="w-4 h-4" />
+              Max Stock in Bag ({inBagCount})
             </>
           ) : (
             <>
               <ShoppingBag className="w-4 h-4" />
-              Purchase Vehicle
+              {inBagCount > 0 ? `Purchase Now (${inBagCount} in Bag)` : 'Purchase Now'}
             </>
           )}
         </button>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Car, ShieldAlert, LogOut, User as UserIcon, LayoutDashboard, PlusCircle, Search } from 'lucide-react';
+import { Car, ShieldAlert, LogOut, User as UserIcon, LayoutDashboard, PlusCircle, Search, ShoppingBag } from 'lucide-react';
 
-export default function Navbar({ user, onLogout }) {
+export default function Navbar({ user, onLogout, cartCount = 0, onOpenBag }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -53,8 +53,23 @@ export default function Navbar({ user, onLogout }) {
             )}
           </div>
 
-          {/* User Controls */}
-          <div className="flex items-center gap-4">
+          {/* User Controls & Shopping Bag */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            
+            {/* Shopping Bag Icon Button */}
+            <button
+              onClick={onOpenBag}
+              className="relative p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-white transition-all group active:scale-95"
+              title="View Shopping Bag"
+            >
+              <ShoppingBag className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-amber-500 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-950 shadow-md">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-full">
@@ -97,3 +112,4 @@ export default function Navbar({ user, onLogout }) {
     </nav>
   );
 }
+

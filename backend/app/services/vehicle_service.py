@@ -1,6 +1,6 @@
 import re
 from typing import Optional, List, Dict, Any
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from app.models import Vehicle
@@ -15,7 +15,14 @@ class VehicleCreateSchema(BaseModel):
     image_url: Optional[str] = None
     fuel_type: Optional[str] = "Petrol"
     transmission: Optional[str] = "Automatic"
-    seating_capacity: Optional[str] = "5"
+    seating_capacity: Optional[Any] = "5"
+
+    @field_validator("seating_capacity", mode="before")
+    @classmethod
+    def coerce_seating(cls, v: Any) -> Optional[str]:
+        if v is not None:
+            return str(v)
+        return "5"
 
 class VehicleUpdateSchema(BaseModel):
     make: Optional[str] = None
@@ -27,7 +34,14 @@ class VehicleUpdateSchema(BaseModel):
     image_url: Optional[str] = None
     fuel_type: Optional[str] = None
     transmission: Optional[str] = None
-    seating_capacity: Optional[str] = None
+    seating_capacity: Optional[Any] = None
+
+    @field_validator("seating_capacity", mode="before")
+    @classmethod
+    def coerce_seating(cls, v: Any) -> Optional[str]:
+        if v is not None:
+            return str(v)
+        return None
 
 class RestockSchema(BaseModel):
     quantity: int = Field(1, ge=1, description="Amount to add to stock")
@@ -43,11 +57,18 @@ class VehicleResponseSchema(BaseModel):
     image_url: Optional[str] = None
     fuel_type: Optional[str] = "Petrol"
     transmission: Optional[str] = "Automatic"
-    seating_capacity: Optional[str] = "5"
+    seating_capacity: Optional[Any] = "5"
     price_insight: Optional[str] = "Average"
     category_average: Optional[float] = None
 
     model_config = ConfigDict(from_attributes=True)
+
+    @field_validator("seating_capacity", mode="before")
+    @classmethod
+    def coerce_seating(cls, v: Any) -> Optional[str]:
+        if v is not None:
+            return str(v)
+        return "5"
 
 
 class SmartSearchResponseSchema(BaseModel):

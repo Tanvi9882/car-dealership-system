@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { X, Sparkles, TrendingDown, Info, ShoppingBag, AlertTriangle, Layers, ArrowRight, ShieldCheck, Fuel, Cog, Users } from 'lucide-react';
 import { vehicleAPI } from '../services/api';
 
-export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onPurchase, isUserLoggedIn, onSelectVehicle }) {
+export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onAddToCart, isUserLoggedIn, onSelectVehicle, inBagCount = 0 }) {
   const [recommendations, setRecommendations] = useState([]);
   const [loadingRecs, setLoadingRecs] = useState(false);
-  const [purchasing, setPurchasing] = useState(false);
 
   const defaultImage = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80";
 
@@ -30,18 +29,12 @@ export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onPurcha
   if (!isOpen || !vehicle) return null;
 
   const isOutOfStock = vehicle.quantity <= 0;
+  const isMaxInBag = inBagCount >= vehicle.quantity;
 
-  const handlePurchase = async () => {
-    if (!isUserLoggedIn) {
-      alert("Please login to purchase vehicles!");
-      return;
-    }
-    setPurchasing(true);
-    try {
-      await onPurchase(vehicle.id);
+  const handlePurchase = () => {
+    if (onAddToCart) {
+      onAddToCart(vehicle);
       onClose();
-    } finally {
-      setPurchasing(false);
     }
   };
 
@@ -108,36 +101,57 @@ export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onPurcha
               </div>
 
               {/* Price & Price Insight */}
-              <div className="glass-card p-4 rounded-2xl border border-slate-800 space-y-2">
-                <div className="flex items-baseline justify-between gap-4">
-                  <span className="text-xs font-medium text-slate-400">Price Range</span>
-                  <span className="text-2xl sm:text-3xl font-black text-emerald-400">
-                    {vehicle.price_range || `₹${vehicle.price.toLocaleString('en-IN')}`}
-                  </span>
+              <div className="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider font-semibold text-slate-400 block mb-1">Price Range</span>
+                    <span className="text-2xl sm:text-3xl font-black text-emerald-400 tracking-tight">
+                      {vehicle.price_range || `₹${vehicle.price.toLocaleString('en-IN')}`}
+                    </span>
+                  </div>
+
+                  {vehicle.price_insight === 'Good Value' && (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shadow-md shadow-emerald-500/10 shrink-0">
+                      <TrendingDown className="w-4 h-4 text-emerald-400" />
+                      <span>Good Value</span>
+                    </div>
+                  )}
+                  {vehicle.price_insight === 'Premium' && (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold bg-purple-500/15 text-purple-300 border border-purple-500/30 shadow-md shadow-purple-500/10 shrink-0">
+                      <Sparkles className="w-4 h-4 text-purple-400" />
+                      <span>Premium Segment</span>
+                    </div>
+                  )}
+                  {vehicle.price_insight === 'Average' && (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800/80 text-slate-300 border border-slate-700 shrink-0">
+                      <Info className="w-4 h-4 text-indigo-400" />
+                      <span>Market Average</span>
+                    </div>
+                  )}
                 </div>
 
-                {/* Price Insights Explanation */}
-                <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-                  <span className="text-slate-400 font-medium flex items-center gap-1">
-                    Category Avg: <strong className="text-slate-200">₹{vehicle.category_average?.toLocaleString('en-IN') || 'N/A'}</strong>
-                  </span>
-                  
+                {/* Category Average & Insight Explanation */}
+                <div className="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <div className="text-slate-400 font-medium flex items-center gap-1.5">
+                    <span>Category Avg:</span>
+                    <strong className="text-slate-100 font-bold">
+                      ₹{vehicle.category_average ? vehicle.category_average.toLocaleString('en-IN') : 'N/A'}
+                    </strong>
+                  </div>
+
                   {vehicle.price_insight === 'Good Value' && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                      <TrendingDown className="w-3.5 h-3.5" />
-                      Good Value (15%+ Below Avg)
+                    <span className="text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-md border border-emerald-800/60">
+                      15%+ Below Category Average
                     </span>
                   )}
                   {vehicle.price_insight === 'Premium' && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      Premium Segment
+                    <span className="text-[11px] font-bold text-purple-400 bg-purple-950/60 px-2.5 py-0.5 rounded-md border border-purple-800/60">
+                      15%+ Above Category Average
                     </span>
                   )}
                   {vehicle.price_insight === 'Average' && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">
-                      <Info className="w-3.5 h-3.5 text-indigo-400" />
-                      Market Average
+                    <span className="text-[11px] font-medium text-slate-400 bg-slate-900 px-2.5 py-0.5 rounded-md border border-slate-800">
+                      Within Normal Category Range
                     </span>
                   )}
                 </div>
@@ -153,21 +167,23 @@ export default function VehicleDetailsModal({ isOpen, onClose, vehicle, onPurcha
 
                 <button
                   onClick={handlePurchase}
-                  disabled={isOutOfStock || purchasing}
-                  className={`flex-1 py-3 px-6 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${
+                  disabled={isOutOfStock || isMaxInBag}
+                  className={`flex-1 py-3.5 px-6 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg ${
                     isOutOfStock
                       ? 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed'
-                      : purchasing
-                      ? 'bg-indigo-700 text-white cursor-wait opacity-80'
-                      : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/30'
+                      : isMaxInBag
+                      ? 'bg-slate-800 text-amber-400/70 border border-amber-500/30 cursor-not-allowed'
+                      : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-amber-500/20 active:scale-95'
                   }`}
                 >
                   {isOutOfStock ? (
                     <>
-                      <AlertTriangle className="w-4 h-4" /> Out of Stock
+                      <AlertTriangle className="w-4 h-4 text-slate-500" /> Out of Stock
                     </>
-                  ) : purchasing ? (
-                    <>Processing...</>
+                  ) : isMaxInBag ? (
+                    <>
+                      <ShoppingBag className="w-4 h-4" /> Max Stock in Bag ({inBagCount})
+                    </>
                   ) : (
                     <>
                       <ShoppingBag className="w-4 h-4" /> Purchase Now
