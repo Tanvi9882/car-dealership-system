@@ -91,7 +91,7 @@ tests/test_vehicles.py::test_restock_vehicle_admin PASSED                [100%]
 ## 🤖 My AI Usage
 
 ### 1. AI Tools Used
-- **Google Gemini / Antigravity AI Assistant**: Primary AI co-author and pair programming assistant used throughout the entire development lifecycle — from architecture design to final UI polish.
+- **Google Gemini**: Primary AI co-author and pair programming assistant used throughout the entire development lifecycle — from architecture design to final UI polish.
 
 ### 2. How AI Was Used
 
