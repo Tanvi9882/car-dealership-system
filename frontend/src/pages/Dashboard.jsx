@@ -118,8 +118,11 @@ export default function Dashboard({ user, cart = [], onAddToCart, onRefreshInven
             <Sparkles className="w-3.5 h-3.5" />
             AI-Enhanced Fleet Collection
           </span>
-          <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight leading-tight mb-4">
-            Discover Exceptional <span className="gradient-text">Performance</span>
+          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mb-4">
+            Find Your Perfect <span className="gradient-text">Drive</span>
+            <span className="block text-2xl sm:text-3xl font-extrabold text-amber-400 mt-2 tracking-normal">
+              Powered by AI.
+            </span>
           </h1>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
             Browse our handpicked inventory of luxury SUVs, sports cars, and electric vehicles with AI Smart Search & Price Insights.
