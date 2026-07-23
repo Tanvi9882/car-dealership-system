@@ -91,16 +91,43 @@ tests/test_vehicles.py::test_restock_vehicle_admin PASSED                [100%]
 ## 🤖 My AI Usage
 
 ### 1. AI Tools Used
-- **Google Gemini / Antigravity AI Assistant**: Primary AI co-author and pair programming assistant used throughout the development lifecycle.
+- **Google Gemini / Antigravity AI Assistant**: Primary AI co-author and pair programming assistant used throughout the entire development lifecycle — from architecture design to final UI polish.
 
 ### 2. How AI Was Used
-- **Architecture & Schema Design**: Used Gemini to design the relational SQLite database schema (`Vehicle` and `User` models) and structure clean, decoupled FastAPI services and routers following SOLID principles.
-- **Test-Driven Development (TDD)**: Asked Gemini to generate comprehensive Pytest unit tests for authentication (`test_auth.py`), vehicle inventory CRUD and purchase/restock edge cases (`test_vehicles.py`), and AI price insight calculations (`test_ai_features.py`) prior to refining feature implementations.
-- **Frontend SPA Components**: Used Gemini to generate and refine sleek, glassmorphic React components (`VehicleCard.jsx`, `SmartSearchBar.jsx`, `VehicleDetailsModal.jsx`, `AdminPanel.jsx`) with Tailwind CSS.
-- **Mahindra Fleet Integration**: Used Gemini to extract specifications and process uploaded image assets for Mahindra models (`XUV 3XO`, `Bolero`, `Thar`, `Scorpio Classic`, `BE 6`) and format Ex-Showroom price ranges in Indian Lakhs (`₹7.54 – ₹15.79 lakh`).
+
+#### 🏗️ Backend Architecture & Database Design
+- Used Gemini to design the relational SQLite database schema (`Vehicle` and `User` models) and structure clean, decoupled FastAPI services and routers following SOLID principles.
+- Generated JWT authentication logic (`jwt.py`), password hashing with bcrypt, and role-based access control (Admin / User).
+
+#### 🧪 Test-Driven Development (TDD)
+- Asked Gemini to generate comprehensive Pytest unit tests for authentication (`test_auth.py`), vehicle inventory CRUD and purchase/restock edge cases (`test_vehicles.py`), and AI price insight calculations (`test_ai_features.py`) — written prior to feature implementation following Red-Green-Refactor.
+
+#### 🎨 Frontend SPA Components
+- Used Gemini to generate and iteratively refine all React components with glassmorphic dark-mode UI:
+  - `VehicleCard.jsx` — hover animations, image zoom, price badge, specs bar
+  - `SmartSearchBar.jsx` — AI natural language, voice search, image upload, quick prompts
+  - `VehicleDetailsModal.jsx` — full spec sheet, color selector, accessories, variant picker
+  - `CheckoutModal.jsx` — multi-step checkout: buyer info, delivery address, payment methods (Token Booking, Full Payment, Loan EMI), UPI QR code, bank transfer modal, on-road price summary
+  - `ShoppingBagDrawer.jsx` — animated slide-in cart with quantity controls
+  - `AdminPanel.jsx` — admin CRUD UI for vehicle management
+  - `Navbar.jsx`, `ProtectedRoute.jsx` — auth-aware navigation
+
+#### 🚗 Vehicle Fleet & Image Integration
+- Used Gemini to curate and integrate a 40+ vehicle fleet across 25 brands (Mahindra, Kia, BMW, Mercedes, Porsche, Lamborghini, etc.) with Ex-Showroom price ranges in Indian Lakhs/Crores.
+- Processed image assets for all brands and configured correct local image paths (`/images/brand/model.png`).
+- Integrated official exterior color palettes for every major brand using `carColors.js`.
+
+#### 💎 UI/UX Design & Polish
+- Iteratively refined the hero banner (centered heading, AI badge, radial background glow, floating particle animations).
+- Designed the premium checkout flow including payment security badges (PCI DSS, SSL, Razorpay), card brand icons (Visa, Mastercard, RuPay), and UPI QR code flow.
+- Added micro-interactions: vehicle card lift on hover, image zoom (1.03×), Ask AI button purple glow, and animated light sweep on hero.
+
+#### 🔒 Security & DevOps
+- Used Gemini to identify and fix hardcoded secrets (JWT secret key, seed passwords) — moved to environment variables loaded from `.env`.
+- Structured the `.gitignore`, `.env.example`, and Git co-authorship workflow.
 
 ### 3. Workflow Reflection
-Leveraging AI as a co-author drastically accelerated the development cycle without compromising code quality. Working in tandem with AI made Test-Driven Development seamless—writing tests upfront ensured 100% endpoint reliability. The AI also made it easy to deliver a polished, dark-mode visual interface with rich metadata and instant error handling.
+Leveraging AI as a co-author drastically accelerated the development cycle without compromising code quality. AI enabled seamless Test-Driven Development — writing tests upfront ensured 100% endpoint reliability across all 14 test cases. The AI pair-programming approach made it possible to deliver a production-quality, dark-mode dealership platform with premium UI, a complete multi-step checkout flow, 40+ vehicles, and full backend security — in a fraction of the time it would take solo.
 
 ---
 
