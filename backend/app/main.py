@@ -1,3 +1,4 @@
+import os
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -23,16 +24,18 @@ def seed_database():
         # Seed users if not exists
         if db.query(User).count() == 0:
             logger.info("Seeding initial users...")
+            admin_password = os.getenv("ADMIN_SEED_PASSWORD", "admin123")
+            user_password = os.getenv("USER_SEED_PASSWORD", "user123")
             admin_user = User(
                 name="System Admin",
                 email="admin@dealership.com",
-                password=hash_password("admin123"),
+                password=hash_password(admin_password),
                 role="admin"
             )
             demo_user = User(
                 name="John Doe",
                 email="user@dealership.com",
-                password=hash_password("user123"),
+                password=hash_password(user_password),
                 role="user"
             )
             db.add_all([admin_user, demo_user])
