@@ -6,15 +6,6 @@ It provides complete JWT-authenticated role-based access control (Users & Admins
 
 ---
 
-## 📐 System Architecture & Stack
-
-- **Backend**: Python 3.13, FastAPI, SQLAlchemy, SQLite, Pydantic v2, PyJWT, Passlib (Bcrypt).
-- **Testing (TDD)**: Pytest, TestClient (**14 / 14 tests passing**).
-- **Frontend**: React 18, Vite, Tailwind CSS, Lucide React Icons.
-- **Database**: SQLite (`car_dealership.db`).
-
----
-
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
