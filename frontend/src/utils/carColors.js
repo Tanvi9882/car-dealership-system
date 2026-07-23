@@ -135,7 +135,45 @@ export const OFFICIAL_MODEL_COLORS = {
   "bentayga": ["Glacier White", "Onyx Black", "St. James Red", "Dark Sapphire", "British Racing Green"],
 
   // 38. Rolls-Royce Phantom / Series II
-  "phantom": ["Arctic White", "Black Diamond", "Midnight Sapphire", "Salamanca Blue", "Bespoke Commission"]
+  "phantom": ["Arctic White", "Black Diamond", "Midnight Sapphire", "Salamanca Blue", "Bespoke Commission"],
+
+  // 39. Land Rover Defender 110
+  "defender 110": ["Fuji White", "Santorini Black", "Eiger Grey", "Gondwana Stone", "Pangea Green"],
+
+  // 40. Land Rover Defender
+  "defender": ["Fuji White", "Santorini Black", "Eiger Grey", "Tasman Blue"],
+
+  // 41. Land Rover Range Rover SV
+  "range rover sv": ["Fuji White", "Santorini Black", "Belgravia Green", "Carpathian Grey", "Batumi Gold"],
+  "range rover": ["Fuji White", "Santorini Black", "Belgravia Green", "Carpathian Grey", "Batumi Gold"],
+
+  // 42. Porsche 911 GT3 RS
+  "911 gt3 rs": ["Guards Red", "Racing Yellow", "GT Silver", "Shark Blue", "White", "Black"],
+  "911": ["Guards Red", "Racing Yellow", "GT Silver", "Shark Blue", "White", "Black"],
+
+  // 43. Porsche Taycan Turbo S EV
+  "taycan turbo s ev": ["Carrara White Metallic", "Jet Black Metallic", "Frozen Blue Metallic", "Carmine Red", "Volcano Grey"],
+  "taycan": ["Carrara White Metallic", "Jet Black Metallic", "Frozen Blue Metallic", "Carmine Red", "Volcano Grey"],
+
+  // 44. Porsche Cayenne Turbo GT
+  "cayenne turbo gt": ["Arctic Grey", "Carrara White", "Chromite Black", "Carmine Red", "Algarve Blue"],
+  "cayenne": ["Arctic Grey", "Carrara White", "Chromite Black", "Carmine Red", "Algarve Blue"],
+
+  // 45. Audi RS Q8 Performance
+  "rs q8 performance": ["Mythos Black", "Daytona Grey", "Navarra Blue", "Glacier White", "Tango Red"],
+  "rs q8": ["Mythos Black", "Daytona Grey", "Navarra Blue", "Glacier White", "Tango Red"],
+
+  // 46. Audi R8 V10 Performance
+  "r8 v10 performance": ["Ara Blue", "Tango Red", "Daytona Grey", "Mythos Black", "Suzuka Grey"],
+  "r8": ["Ara Blue", "Tango Red", "Daytona Grey", "Mythos Black", "Suzuka Grey"],
+
+  // 47. Mercedes-Benz S-Class / Maybach
+  "s-class maybach": ["Obsidian Black", "Diamond White Bright", "Nautical Blue", "Rubellite Red", "Emerald Green"],
+  "s-class": ["Obsidian Black", "Polar White", "Graphite Grey", "Emerald Green", "High-Tech Silver"],
+
+  // 48. Mercedes-Benz EQS 580
+  "eqs 580": ["Polar White", "Obsidian Black", "High-Tech Silver", "Sodalite Blue", "Graphite Grey"],
+  "eqs": ["Polar White", "Obsidian Black", "High-Tech Silver", "Sodalite Blue", "Graphite Grey"]
 };
 
 // Color Swatch Hex Mappings for UI display
@@ -171,6 +209,15 @@ export const COLOR_HEX_MAP = {
   "glacier white": "#FFFFFF",
   "hallmark silver": "#CBD5E1",
   "sonic titanium": "#94A3B8",
+  "fuji white": "#FFFFFF",
+  "white": "#FFFFFF",
+  "carrara white metallic": "#F8FAFC",
+  "carrara white": "#F8FAFC",
+  "gt silver": "#CBD5E1",
+  "suzuka grey": "#E2E8F0",
+  "polar white": "#FFFFFF",
+  "diamond white bright": "#F8FAFC",
+  "high-tech silver": "#CBD5E1",
 
   // Blacks
   "stealth black": "#09090B",
@@ -194,6 +241,11 @@ export const COLOR_HEX_MAP = {
   "nero noctis": "#000000",
   "nero daytona": "#09090B",
   "black diamond": "#0F172A",
+  "santorini black": "#09090B",
+  "jet black metallic": "#000000",
+  "chromite black": "#09090B",
+  "mythos black": "#000000",
+  "obsidian black": "#09090B",
 
   // Reds & Pinks
   "tango red": "#DC2626",
@@ -213,6 +265,9 @@ export const COLOR_HEX_MAP = {
   "hyper red": "#B91C1C",
   "rosso corsa": "#DC2626",
   "st. james red": "#991B1B",
+  "guards red": "#DC2626",
+  "carmine red": "#B91C1C",
+  "rubellite red": "#881337",
 
   // Blues
   "nebula blue": "#2563EB",
@@ -239,6 +294,14 @@ export const COLOR_HEX_MAP = {
   "dark sapphire": "#1E1B4B",
   "midnight sapphire": "#0F172A",
   "salamanca blue": "#1E40AF",
+  "tasman blue": "#0284C7",
+  "shark blue": "#0EA5E9",
+  "frozen blue metallic": "#38BDF8",
+  "algarve blue": "#1E3A8A",
+  "navarra blue": "#1E40AF",
+  "ara blue": "#0284C7",
+  "nautical blue": "#1E3A8A",
+  "sodalite blue": "#1E40AF",
 
   // Yellows & Greens & Oranges
   "nitro yellow": "#FACC15",
@@ -247,6 +310,7 @@ export const COLOR_HEX_MAP = {
   "moss yellow": "#CA8A04",
   "accelerate yellow": "#EAB308",
   "giallo modena": "#FACC15",
+  "racing yellow": "#FACC15",
   "deep forest": "#14532D",
   "isle of man green": "#15803D",
   "racing green": "#065F46",
@@ -254,6 +318,9 @@ export const COLOR_HEX_MAP = {
   "verde selvans": "#16A34A",
   "verdant green": "#065F46",
   "british racing green": "#14532D",
+  "pangea green": "#166534",
+  "belgravia green": "#14532D",
+  "emerald green": "#065F46",
   "arancio borealis": "#F97316",
   "arancio xanto": "#EA580C",
 
@@ -262,6 +329,8 @@ export const COLOR_HEX_MAP = {
   "golden brown": "#92400E",
   "desert myst": "#D97706",
   "gravity gold matte": "#D97706",
+  "batumi gold": "#D97706",
+  "gondwana stone": "#78350F",
   "deep grey": "#475569",
   "galaxy grey": "#334155",
   "matte grey": "#64748B",
@@ -284,6 +353,11 @@ export const COLOR_HEX_MAP = {
   "vapour grey": "#94A3B8",
   "midnight silver": "#475569",
   "gun metallic": "#475569",
+  "eiger grey": "#475569",
+  "carpathian grey": "#334155",
+  "volcano grey": "#475569",
+  "arctic grey": "#94A3B8",
+  "daytona grey": "#475569",
   "bespoke commission": "#D97706"
 };
 
